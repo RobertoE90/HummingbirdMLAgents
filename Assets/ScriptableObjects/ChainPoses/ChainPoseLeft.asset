@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ChainPoseLeft
   m_EditorClassIdentifier: 
   _eulerAngles:
-  - {x: 0, y: 10, z: 0}
-  - {x: 0, y: 10, z: 0}
+  - {x: 0, y: 20, z: 0}
+  - {x: 0, y: 20, z: 0}
   - {x: 0, y: 10, z: 0}
   - {x: 0, y: 16, z: 0}
   - {x: 0, y: 10, z: 0}

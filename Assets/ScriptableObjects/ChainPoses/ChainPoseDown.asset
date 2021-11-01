@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ChainPoseDown
   m_EditorClassIdentifier: 
   _eulerAngles:
-  - {x: -20, y: 0, z: 0}
-  - {x: -17, y: 0, z: 0}
-  - {x: -18, y: 0, z: 0}
+  - {x: -30, y: 0, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: -12, y: 0, z: 0}
   - {x: -15, y: 0, z: 0}
   - {x: -12, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
