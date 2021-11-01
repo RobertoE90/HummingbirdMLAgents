@@ -6,123 +6,119 @@ public class HummingbirdController : MonoBehaviour
 {
     [Header("Controller input")]
     [SerializeField] [Range(-1, 1)] private float _strength;
-    private const float FORCE_MULTIPLIER = 10000;
+    private const float FORCE_MULTIPLIER = 4.905f;
 
     [Space(5)]
-    [SerializeField] [Range(-1f, 1f)] private float _horizontalControl;
-    [SerializeField] [Range(-1f, 1f)] private float _verticalControl;
+    [SerializeField] [Range(-1f, 1f)] private float _horizontalWingControl;
+    [SerializeField] [Range(-1f, 1f)] private float _verticalWingControl;
+
+    [SerializeField] [Range(-1f, 1f)] private float _horizontalTailControl;
+    [SerializeField] [Range(-1f, 1f)] private float _verticalTailControl;
     [Space(5)]
-    [SerializeField] [Range(-1f, 1f)] private float _lastJoinWeigth;
-    private const float LAST_WEIGTH_MIN = 0.125f;
-    private const float LAST_WEIGTH_MAX = 1.25f;
+    [SerializeField] [Range(-1f, 1f)] private float _openTail;
+    private const float OPEN_TAIL_WEIGTH_A = 0.15f;
+    private const float OPEN_TAIL_WEIGTH_B = 0.75f;
 
 
     [Space(20)]
-    [SerializeField] private Transform _leftWingTransformReference;
-    [SerializeField] private Transform _rightWingTransformReference;
+    [SerializeField] private Transform[] _wingForceReferences;
+    [SerializeField] private Transform _wingRoot;
 
     [Space(20)]
     [SerializeField] private CentroidComputer _centroidComputer;
     [SerializeField] private ChainTargetController _chainController;
     [SerializeField] private Animator _animator;
 
-    private Vector3 _leftWingCentroidDelta;
-    private float _leftWingCentroidDistance;
-    private Vector3 _leftForce;
-
-    private Vector3 _rightWingCentroidDelta;
-    private float _rightWingCentroidDistance;
-    private Vector3 _rightForce;
 
     private Rigidbody _rigidbody;
+    private Quaternion _wingsInitialRotation;
+    private bool _freezed = true;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 30;
+        _wingsInitialRotation = _wingRoot.localRotation;
+        StartCoroutine(ReleaseRigidBody());
     }
 
-    private void LateUpdate()
+    private IEnumerator ReleaseRigidBody()
     {
-        _chainController.SetChainControlsValues(_horizontalControl, _verticalControl);
-
-        var normalizedWeight = _lastJoinWeigth * 0.5f + 0.5f;
-        _centroidComputer.OverrideWeight(7, Mathf.Lerp(LAST_WEIGTH_MIN, LAST_WEIGTH_MAX, normalizedWeight));
-        _animator.SetFloat("OpenTail", normalizedWeight);
-
-        _leftWingCentroidDelta = _leftWingTransformReference.position - _centroidComputer.Centroid;
-        _leftWingCentroidDistance = _leftWingCentroidDelta.magnitude;
-        
-        _rightWingCentroidDelta = _rightWingTransformReference.position - _centroidComputer.Centroid;
-        _rightWingCentroidDistance = _rightWingCentroidDelta.magnitude;
-
-        _leftForce = ForceDirection(_leftWingCentroidDelta, _leftWingCentroidDistance);
-        _rightForce = ForceDirection(_rightWingCentroidDelta, _rightWingCentroidDistance);
-
-        if (_rigidbody != null)
-        {
-            _rigidbody.angularDrag = Mathf.Lerp(35f, 45f, normalizedWeight);
-            _rigidbody.drag = Mathf.Lerp(2f, 3.5f, normalizedWeight);
-            var addedForceDrag = Mathf.Lerp(500, -500, normalizedWeight);
-
-            var normalizedStrength = _strength * 0.5f + 0.5f;
-            _rigidbody.AddForceAtPosition(
-                (FORCE_MULTIPLIER + addedForceDrag) * _leftForce * normalizedStrength * Time.deltaTime,
-                _leftWingTransformReference.position);
-
-            _rigidbody.AddForceAtPosition(
-                (FORCE_MULTIPLIER + addedForceDrag) * _rightForce * normalizedStrength * Time.deltaTime, 
-                _rightWingTransformReference.position);
-        }
+        yield return new WaitForSeconds(Time.deltaTime * 5f);
+        _freezed = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.isKinematic = false;
     }
 
-    private Vector3 ForceDirection(Vector3 centroidDelta, float centroidDistance)
+    private void Update()
     {
-        var forceDirection = Vector3.ProjectOnPlane(transform.up, centroidDelta).normalized;
-        forceDirection = Vector3.Reflect(forceDirection, transform.forward);
-        forceDirection *= centroidDistance;
-        return forceDirection;
+        _chainController.SetChainControlsValues(_horizontalTailControl, _verticalTailControl);
+
+        var normalizedOpenTailValue = _openTail * 0.5f + 0.5f;
+        _animator.SetFloat("OpenTail", normalizedOpenTailValue);
+
+        _centroidComputer.OverrideWeight(8, Mathf.Lerp(OPEN_TAIL_WEIGTH_A, OPEN_TAIL_WEIGTH_B, normalizedOpenTailValue));
+
+        _wingRoot.localRotation = _wingsInitialRotation * Quaternion.Euler(
+            Mathf.Lerp(-40f, 40f, _verticalWingControl * 0.5f + 0.5f),
+            0,
+            Mathf.Lerp(-10f, 10f, _horizontalWingControl * 0.5f + 0.5f));
+
+        //_rigidbody.angularDrag = Mathf.Lerp(35, 45f, normalizedOpenTailValue);
+        _rigidbody.drag = Mathf.Lerp(2f, 3.5f, normalizedOpenTailValue);
     }
 
-
-    /*
-    private void OnGUI()
+    private void FixedUpdate()
     {
-        GUILayout.BeginArea(new Rect(10, 10, 500, 500));
-        GUILayout.BeginVertical();
-        GUILayout.Label($"Left {_leftForce.x * 1000}, {_leftForce.y * 1000}, {_leftForce.z * 1000}");
-        GUILayout.Label($"Right {_rightForce.x * 1000}, {_rightForce.y * 1000}, {_rightForce.z * 1000}");
-        GUILayout.EndVertical();
-        GUILayout.EndArea();
-
-    }
-    */
-    private void OnDrawGizmos()
-    {
-        if (!Application.isPlaying)
-            LateUpdate();
+        _centroidComputer.ComputeCentroidPosition();
+        var pivot = _centroidComputer.Centroid - transform.position;
+        pivot = transform.InverseTransformDirection(pivot + _rigidbody.velocity * Time.fixedDeltaTime);
+        _rigidbody.centerOfMass = pivot;
 
         var normalizedStrength = _strength * 0.5f + 0.5f;
 
-        Gizmos.color = new Color(0, 125, 125);
-        Gizmos.matrix = Matrix4x4.TRS(_centroidComputer.Centroid, Quaternion.identity, Vector3.one);
+        for (var i = 0; i < _wingForceReferences.Length; i++)
+        {
+            var forceWorldPoint = _wingForceReferences[i].position + _rigidbody.velocity * Time.fixedDeltaTime;
 
-        Gizmos.DrawLine(
-            _leftWingCentroidDelta,
-            _leftWingCentroidDelta + FORCE_MULTIPLIER * _leftForce * normalizedStrength * 0.00025f);
+            var forceVector = _wingForceReferences[i].up;
+            forceVector = FORCE_MULTIPLIER * forceVector * normalizedStrength;
+            _rigidbody.AddForceAtPosition(
+                forceVector,
+                forceWorldPoint);
 
-        Gizmos.matrix *= Matrix4x4.TRS(Vector3.zero, Quaternion.LookRotation(_leftWingCentroidDelta, transform.forward), Vector3.one);
-        //Gizmos.DrawWireSphere(Vector3.zero, _leftWingCentroidDistance);
+            Debug.DrawRay(forceWorldPoint, forceVector * 0.025f, Color.blue);
 
-        Gizmos.matrix = Matrix4x4.TRS(_centroidComputer.Centroid, Quaternion.identity, Vector3.one);
+            var centerDelta = forceWorldPoint - _rigidbody.worldCenterOfMass;
+            Debug.DrawRay(forceWorldPoint, Vector3.ProjectOnPlane(forceVector, centerDelta.normalized) * 0.03f, Color.green);
 
-        Gizmos.DrawLine(
-               _rightWingCentroidDelta,
-               _rightWingCentroidDelta + FORCE_MULTIPLIER * _rightForce * normalizedStrength * 0.00025f);
+            Debug.DrawLine(
+                _rigidbody.worldCenterOfMass,
+                forceWorldPoint,
+                Color.red);
+        }
 
-        Gizmos.matrix *= Matrix4x4.TRS(Vector3.zero, Quaternion.LookRotation(_rightWingCentroidDelta, transform.forward), Vector3.one);
-        //Gizmos.DrawWireSphere(Vector3.zero, _rightWingCentroidDistance);
+
+    }
+
+    private void OnGUI()
+    {
+        var distanceSum = Vector3.zero;
+        for (var i = 0; i < _wingForceReferences.Length; i++) {
+            distanceSum += _wingForceReferences[i].position;
+        }
+        distanceSum /= (float)_wingForceReferences.Length;
+        distanceSum = distanceSum - _rigidbody.worldCenterOfMass;
+
+        GUI.Label(new Rect(10, 10, 300, 300), $"Balance {distanceSum.x * 100000}, {distanceSum.y * 100000}, {distanceSum.z * 100000}");
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!_rigidbody)
+            return;
+            
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(_rigidbody.worldCenterOfMass, 0.025f);
     }
 }

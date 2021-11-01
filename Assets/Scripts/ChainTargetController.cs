@@ -42,7 +42,7 @@ public class ChainTargetController : MonoBehaviour
 
         _lerpedPose = InterpolatePoses();
         TransformChainWithPose(_lerpedPose, out _chainTargetPositions, out _chainTargetRotations);
-        _chainToTarget.TargetPositions = _chainTargetPositions;
+        _chainToTarget.FitChainToPositions(_chainTargetPositions);
     }
 
     private void Initialize()
@@ -64,8 +64,6 @@ public class ChainTargetController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!Application.isPlaying)
-            Update();
 
         if (_debugTargetChain)
             DrawChain(_lerpedPose, new Color(0, 255, 255), 0.015f, false);
