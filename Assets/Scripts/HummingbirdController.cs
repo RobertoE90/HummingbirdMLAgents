@@ -6,6 +6,7 @@ using UnityEngine;
 public class HummingbirdController : Agent
 {
     [SerializeField] private bool _isTraining;
+    [SerializeField] private bool _debug = true;
 
     [Header("Controller input")]
     [SerializeField] [Range(-1, 1)] private float _strength;
@@ -32,6 +33,11 @@ public class HummingbirdController : Agent
     [SerializeField] private Animator _animator;
     [Header("External references")]
     [SerializeField] private EnvironmentController _environmentController;
+
+    private float _currentHorizontalTailControl;
+    private float _currentVerticalTailControl;
+    private float _currentOpenTailControl;
+
 
     private Rigidbody _rigidbody;
     private Quaternion _wingsInitialRotation;
@@ -69,7 +75,7 @@ public class HummingbirdController : Agent
     private void FrameRewards()
     {
         if(_isTraining)
-            AddReward(-1 * StepCount / (float)MaxStep);
+            AddReward(-1/ (float)MaxStep);
 
         var distance = (_environmentController.TargetPosition - transform.position).magnitude;
         if(distance < _environmentController.TargetPositionRadius)
@@ -132,7 +138,15 @@ public class HummingbirdController : Agent
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
 
-        UpdateHumingbirdFromInput();
+        //Default state
+        _strength = 0f;
+        _verticalWingControl = 0f;
+        _horizontalWingControl = 0f;
+        _horizontalTailControl = -0.0109999f;
+        _verticalTailControl = 0.408085f;
+        _openTail = -1;
+
+        UpdateHumingbirdFromInput(false);
         _chainController.ForceUpdatePose();
         UpdateRigidBodyCenter();
 
@@ -142,15 +156,28 @@ public class HummingbirdController : Agent
 
     private void Update()
     {
-       UpdateHumingbirdFromInput();
+       UpdateHumingbirdFromInput(true);
        FrameRewards();
     }
 
-    private void UpdateHumingbirdFromInput()
+    private void UpdateHumingbirdFromInput(bool lerp)
     {
-        _chainController.SetChainControlsValues(_horizontalTailControl, _verticalTailControl);
+        if (lerp)
+        {
+            _currentHorizontalTailControl = Mathf.Lerp(_currentHorizontalTailControl, _horizontalTailControl, 4 * Time.deltaTime);
+            _currentVerticalTailControl = Mathf.Lerp(_currentVerticalTailControl, _verticalTailControl, 4 * Time.deltaTime);
+            _currentOpenTailControl = Mathf.Lerp(_currentOpenTailControl, _openTail, 4 * Time.deltaTime);
+        }
+        else
+        {
+            _currentHorizontalTailControl = _horizontalTailControl;
+            _currentVerticalTailControl = _verticalTailControl;
+            _currentOpenTailControl = _openTail;
+        }
 
-        var normalizedOpenTailValue = _openTail * 0.5f + 0.5f;
+        _chainController.SetChainControlsValues(_currentHorizontalTailControl, _currentVerticalTailControl);
+
+        var normalizedOpenTailValue = _currentOpenTailControl * 0.5f + 0.5f;
         _animator.SetFloat("OpenTail", normalizedOpenTailValue);
 
         _centroidComputer.OverrideWeight(8, Mathf.Lerp(OPEN_TAIL_WEIGTH_A, OPEN_TAIL_WEIGTH_B, normalizedOpenTailValue));
@@ -160,8 +187,8 @@ public class HummingbirdController : Agent
             0,
             Mathf.Lerp(-10f, 10f, _horizontalWingControl * 0.5f + 0.5f));
 
-        _rigidbody.angularDrag = Mathf.Lerp(35, 45f, normalizedOpenTailValue);
-        _rigidbody.drag = Mathf.Lerp(2f, 3.5f, normalizedOpenTailValue);
+        _rigidbody.angularDrag = Mathf.Lerp(37.5f, 55f, normalizedOpenTailValue);
+        _rigidbody.drag = Mathf.Lerp(2.5f, 4f, normalizedOpenTailValue);
     }
 
     private void UpdateRigidBodyCenter()
@@ -184,29 +211,32 @@ public class HummingbirdController : Agent
         for (var i = 0; i < _wingForceReferences.Length; i++)
         {
             var forceWorldPoint = _wingForceReferences[i].position + _rigidbody.velocity * Time.fixedDeltaTime;
+            var openTailForceDelta = Mathf.Lerp(0, -3, _currentOpenTailControl * 0.5f - 0.5f);
 
             var forceVector = _wingForceReferences[i].up;
-            forceVector = FORCE_MULTIPLIER * forceVector * normalizedStrength;
+            forceVector = (FORCE_MULTIPLIER + openTailForceDelta) * forceVector * normalizedStrength;
             _rigidbody.AddForceAtPosition(
                 forceVector,
                 forceWorldPoint);
 
-            Debug.DrawRay(forceWorldPoint, forceVector * 0.025f, Color.blue);
+            if (_debug)
+            {
+                Debug.DrawRay(forceWorldPoint, forceVector * 0.025f, Color.blue);
 
-            var centerDelta = forceWorldPoint - _rigidbody.worldCenterOfMass;
-            Debug.DrawRay(forceWorldPoint, Vector3.ProjectOnPlane(forceVector, centerDelta.normalized) * 0.03f, Color.green);
+                var centerDelta = forceWorldPoint - _rigidbody.worldCenterOfMass;
+                Debug.DrawRay(forceWorldPoint, Vector3.ProjectOnPlane(forceVector, centerDelta.normalized) * 0.03f, Color.green);
 
-            Debug.DrawLine(
-                _rigidbody.worldCenterOfMass,
-                forceWorldPoint,
-                Color.red);
+                Debug.DrawLine(
+                    _rigidbody.worldCenterOfMass,
+                    forceWorldPoint,
+                    Color.red);
+            }
         }
     }
 
-
     private void OnDrawGizmos()
     {
-        if (!_rigidbody)
+        if (!_rigidbody || !_debug)
             return;
             
         Gizmos.color = Color.yellow;

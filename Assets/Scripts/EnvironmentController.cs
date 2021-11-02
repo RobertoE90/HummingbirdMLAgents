@@ -21,9 +21,9 @@ public class EnvironmentController : MonoBehaviour
 
     public async void EndEpisodeFeedback(bool failed)
     {
-        _floor.material.SetColor("_BaseColor", failed ? Color.red : Color.blue);
+        _floor.sharedMaterial.SetColor("_BaseColor", failed ? Color.red : Color.blue);
         await Task.Delay(100);
-        _floor.material.SetColor("_BaseColor", Color.green);
+        _floor.sharedMaterial.SetColor("_BaseColor", Color.green);
     }
 
     public void ConfigureEnvironment()
@@ -50,7 +50,9 @@ public class EnvironmentController : MonoBehaviour
 
     private void Update()
     {
-        _infoLabel.text = $"Current reward {_hummingbird.GetCumulativeReward()}";
+        _infoLabel.text = 
+            $"Current reward {_hummingbird.GetCumulativeReward()}\n" +
+            $"Steps {_hummingbird.StepCount} / {_hummingbird.MaxStep}";
     }
 
     private void OnDrawGizmos()
@@ -58,6 +60,6 @@ public class EnvironmentController : MonoBehaviour
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(_boxCollider.center, _boxCollider.size);
-        Gizmos.DrawWireSphere(_targetPosition.position, _targetPositionRadius);
+        Gizmos.DrawWireSphere(_targetPosition.localPosition, _targetPositionRadius);
     }
 }
