@@ -183,11 +183,11 @@ public class HummingbirdController : Agent
         _centroidComputer.OverrideWeight(8, Mathf.Lerp(OPEN_TAIL_WEIGTH_A, OPEN_TAIL_WEIGTH_B, normalizedOpenTailValue));
 
         _wingRoot.localRotation = _wingsInitialRotation * Quaternion.Euler(
-            Mathf.Lerp(-20f, 20f, _verticalWingControl * 0.5f + 0.5f),
+            Mathf.Lerp(-40f, 40f, _verticalWingControl * 0.5f + 0.5f),
             0,
-            Mathf.Lerp(-10f, 10f, _horizontalWingControl * 0.5f + 0.5f));
+            Mathf.Lerp(-25f, 25f, _horizontalWingControl * 0.5f + 0.5f));
 
-        _rigidbody.angularDrag = Mathf.Lerp(37.5f, 55f, normalizedOpenTailValue);
+        _rigidbody.angularDrag = Mathf.Lerp(35f, 55f, normalizedOpenTailValue);
         _rigidbody.drag = Mathf.Lerp(2.5f, 4f, normalizedOpenTailValue);
     }
 
