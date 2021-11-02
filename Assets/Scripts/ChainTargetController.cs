@@ -34,15 +34,10 @@ public class ChainTargetController : MonoBehaviour
     {
         Initialize();
     }
-
+    
     private void Update()
     {
-        if (_initPositions == null || _initRotations == null)
-            Initialize();
-
-        _lerpedPose = InterpolatePoses();
-        TransformChainWithPose(_lerpedPose, out _chainTargetPositions, out _chainTargetRotations);
-        _chainToTarget.FitChainToPositions(_chainTargetPositions);
+        ForceUpdatePose();
     }
 
     private void Initialize()
@@ -60,6 +55,16 @@ public class ChainTargetController : MonoBehaviour
     {
         _horizontalLerp = horizontal;
         _verticalLerp = vertical;
+    }
+
+    public void ForceUpdatePose()
+    {
+        if (_initPositions == null || _initRotations == null)
+            Initialize();
+
+        _lerpedPose = InterpolatePoses();
+        TransformChainWithPose(_lerpedPose, out _chainTargetPositions, out _chainTargetRotations);
+        _chainToTarget.FitChainToPositions(_chainTargetPositions);
     }
 
     private void OnDrawGizmos()
@@ -129,7 +134,7 @@ public class ChainTargetController : MonoBehaviour
         }
     }
 
-    private ChainPose InterpolatePoses ()
+    private ChainPose InterpolatePoses()
     {
         var cp = ScriptableObject.CreateInstance<ChainPose>();
         if (_leftPose.JoinCount != _rightPose.JoinCount || _upPose.JoinCount != _downPose.JoinCount || _leftPose.JoinCount != _downPose.JoinCount)

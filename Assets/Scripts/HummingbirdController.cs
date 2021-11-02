@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class HummingbirdController : MonoBehaviour
@@ -28,29 +29,54 @@ public class HummingbirdController : MonoBehaviour
     [SerializeField] private CentroidComputer _centroidComputer;
     [SerializeField] private ChainTargetController _chainController;
     [SerializeField] private Animator _animator;
-
+    [Header("External references")]
+    [SerializeField] private EnvironmentController _environmentController;
 
     private Rigidbody _rigidbody;
     private Quaternion _wingsInitialRotation;
-    private bool _freezed = true;
+
+    private bool _freezed = false;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _wingsInitialRotation = _wingRoot.localRotation;
-        StartCoroutine(ReleaseRigidBody());
+        _environmentController.ConfigureEnvironment();
     }
 
-    private IEnumerator ReleaseRigidBody()
+    public void Repose(Vector3 newPosition)
     {
-        yield return new WaitForSeconds(Time.deltaTime * 5f);
-        _freezed = false;
+        StartCoroutine(ReposeCoroutine(newPosition));
+    }
+
+    private IEnumerator ReposeCoroutine(Vector3 newPosition)
+    {
+        if (!_rigidbody)
+            _rigidbody = GetComponent<Rigidbody>();
+
+        _freezed = true;
+        
+        yield return new WaitForFixedUpdate();
+        transform.localPosition = newPosition;
+        transform.rotation = Quaternion.identity;
+
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
-        _rigidbody.isKinematic = false;
+
+        UpdateHumingbirdFromInput();
+        _chainController.ForceUpdatePose();
+        UpdateRigidBodyCenter();
+
+        yield return new WaitForFixedUpdate();
+        _freezed = false;
     }
 
     private void Update()
+    {
+       UpdateHumingbirdFromInput();   
+    }
+
+    private void UpdateHumingbirdFromInput()
     {
         _chainController.SetChainControlsValues(_horizontalTailControl, _verticalTailControl);
 
@@ -60,20 +86,29 @@ public class HummingbirdController : MonoBehaviour
         _centroidComputer.OverrideWeight(8, Mathf.Lerp(OPEN_TAIL_WEIGTH_A, OPEN_TAIL_WEIGTH_B, normalizedOpenTailValue));
 
         _wingRoot.localRotation = _wingsInitialRotation * Quaternion.Euler(
-            Mathf.Lerp(-40f, 40f, _verticalWingControl * 0.5f + 0.5f),
+            Mathf.Lerp(-20f, 20f, _verticalWingControl * 0.5f + 0.5f),
             0,
             Mathf.Lerp(-10f, 10f, _horizontalWingControl * 0.5f + 0.5f));
 
-        //_rigidbody.angularDrag = Mathf.Lerp(35, 45f, normalizedOpenTailValue);
+        _rigidbody.angularDrag = Mathf.Lerp(35, 45f, normalizedOpenTailValue);
         _rigidbody.drag = Mathf.Lerp(2f, 3.5f, normalizedOpenTailValue);
     }
 
-    private void FixedUpdate()
+    private void UpdateRigidBodyCenter()
     {
         _centroidComputer.ComputeCentroidPosition();
         var pivot = _centroidComputer.Centroid - transform.position;
         pivot = transform.InverseTransformDirection(pivot + _rigidbody.velocity * Time.fixedDeltaTime);
         _rigidbody.centerOfMass = pivot;
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (_freezed)
+            return;
+
+        UpdateRigidBodyCenter();
 
         var normalizedStrength = _strength * 0.5f + 0.5f;
 
@@ -97,20 +132,14 @@ public class HummingbirdController : MonoBehaviour
                 forceWorldPoint,
                 Color.red);
         }
-
-
     }
 
-    private void OnGUI()
+    private void OnTriggerExit(Collider other) //the only trigger in scene is the environment bounds
     {
-        var distanceSum = Vector3.zero;
-        for (var i = 0; i < _wingForceReferences.Length; i++) {
-            distanceSum += _wingForceReferences[i].position;
-        }
-        distanceSum /= (float)_wingForceReferences.Length;
-        distanceSum = distanceSum - _rigidbody.worldCenterOfMass;
-
-        GUI.Label(new Rect(10, 10, 300, 300), $"Balance {distanceSum.x * 100000}, {distanceSum.y * 100000}, {distanceSum.z * 100000}");
+        if (_freezed)
+            return;
+        Debug.Log("Restart episode");
+        _environmentController.ConfigureEnvironment();
     }
 
     private void OnDrawGizmos()
