@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -10,12 +12,19 @@ public class EnvironmentController : MonoBehaviour
     [SerializeField] private HummingbirdController _hummingbird;
     [SerializeField] private Transform _targetPosition;
     [SerializeField] private float _targetPositionRadius;
-    [SerializeField] private GameObject _floor;
+    [SerializeField] private Renderer _floor;
     [SerializeField] private BoxCollider _boxCollider;
+    [SerializeField] private TextMeshPro _infoLabel;
 
     public Vector3 TargetPosition => _targetPosition.position;
     public float TargetPositionRadius => _targetPositionRadius;
 
+    public async void EndEpisodeFeedback(bool failed)
+    {
+        _floor.material.SetColor("_BaseColor", failed ? Color.red : Color.blue);
+        await Task.Delay(100);
+        _floor.material.SetColor("_BaseColor", Color.green);
+    }
 
     public void ConfigureEnvironment()
     {
@@ -39,6 +48,10 @@ public class EnvironmentController : MonoBehaviour
         _targetPosition.localPosition = Vector3.up * _environmentSize.y * 0.5f + random * 0.45f;
     }
 
+    private void Update()
+    {
+        _infoLabel.text = $"Current reward {_hummingbird.GetCumulativeReward()}";
+    }
 
     private void OnDrawGizmos()
     {

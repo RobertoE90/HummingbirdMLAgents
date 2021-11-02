@@ -267,9 +267,9 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
-  field of view: 150
-  orthographic: 1
+  far clip plane: 30
+  field of view: 60
+  orthographic: 0
   orthographic size: 2.75
   m_Depth: -1
   m_CullingMask:
@@ -293,13 +293,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: -5}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 3, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1617417578}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,6 +437,10 @@ PrefabInstance:
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829935755689515624, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: m_BehaviorName
+      value: Hummingbird
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}

@@ -1,10 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-public class HummingbirdController : MonoBehaviour
+public class HummingbirdController : Agent
 {
+    [SerializeField] private bool _isTraining;
+
     [Header("Controller input")]
     [SerializeField] [Range(-1, 1)] private float _strength;
     private const float FORCE_MULTIPLIER = 4.905f;
@@ -19,7 +21,6 @@ public class HummingbirdController : MonoBehaviour
     [SerializeField] [Range(-1f, 1f)] private float _openTail;
     private const float OPEN_TAIL_WEIGTH_A = 0.15f;
     private const float OPEN_TAIL_WEIGTH_B = 0.75f;
-
 
     [Space(20)]
     [SerializeField] private Transform[] _wingForceReferences;
@@ -36,13 +37,81 @@ public class HummingbirdController : MonoBehaviour
     private Quaternion _wingsInitialRotation;
 
     private bool _freezed = false;
+    private bool _episodeTimeouted = true;
 
-    private void Awake()
+#region ML_AGENTS_IMPLEMENTATION
+    public override void Initialize()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _wingsInitialRotation = _wingRoot.localRotation;
+        this.MaxStep = _isTraining ? 1500 : 0;
         _environmentController.ConfigureEnvironment();
     }
+
+    public override void OnEpisodeBegin()
+    {
+        if (_episodeTimeouted)
+            _environmentController.EndEpisodeFeedback(true);
+
+        _episodeTimeouted = true;
+
+        _environmentController.ConfigureEnvironment();
+    }
+
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(transform.rotation);
+        sensor.AddObservation(_rigidbody.velocity);
+        sensor.AddObservation(_rigidbody.angularVelocity);
+        sensor.AddObservation(_environmentController.TargetPosition - transform.position);
+    }
+
+    private void FrameRewards()
+    {
+        if(_isTraining)
+            AddReward(-1 * StepCount / (float)MaxStep);
+
+        var distance = (_environmentController.TargetPosition - transform.position).magnitude;
+        if(distance < _environmentController.TargetPositionRadius)
+        {
+            AddReward(1);
+            _episodeTimeouted = false;
+            _environmentController.EndEpisodeFeedback(false);
+            EndEpisode();
+        }
+    }
+
+    public override void Heuristic(float[] actionsOut)
+    {
+        actionsOut[0] = _strength;
+        actionsOut[1] = _horizontalWingControl;
+        actionsOut[2] = _verticalWingControl;
+        actionsOut[3] = _horizontalTailControl;
+        actionsOut[4] = _verticalTailControl;
+        actionsOut[5] = _openTail;
+    }
+
+    public override void OnActionReceived(float[] vectorAction) {
+        _strength = vectorAction[0];
+        _horizontalWingControl = vectorAction[1];
+        _verticalWingControl = vectorAction[2];
+        _horizontalTailControl = vectorAction[3];
+        _verticalTailControl = vectorAction[4];
+        _openTail = vectorAction[5];
+    }
+    
+
+    private void OnTriggerExit(Collider other) //the only trigger in scene is the environment bounds
+    {
+        if (_freezed)
+            return;
+
+        _episodeTimeouted = false;
+        AddReward(-1);
+        _environmentController.EndEpisodeFeedback(true);
+        EndEpisode();
+    }
+    #endregion
 
     public void Repose(Vector3 newPosition)
     {
@@ -73,7 +142,8 @@ public class HummingbirdController : MonoBehaviour
 
     private void Update()
     {
-       UpdateHumingbirdFromInput();   
+       UpdateHumingbirdFromInput();
+       FrameRewards();
     }
 
     private void UpdateHumingbirdFromInput()
@@ -100,7 +170,6 @@ public class HummingbirdController : MonoBehaviour
         var pivot = _centroidComputer.Centroid - transform.position;
         pivot = transform.InverseTransformDirection(pivot + _rigidbody.velocity * Time.fixedDeltaTime);
         _rigidbody.centerOfMass = pivot;
-
     }
 
     private void FixedUpdate()
@@ -134,13 +203,6 @@ public class HummingbirdController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) //the only trigger in scene is the environment bounds
-    {
-        if (_freezed)
-            return;
-        Debug.Log("Restart episode");
-        _environmentController.ConfigureEnvironment();
-    }
 
     private void OnDrawGizmos()
     {

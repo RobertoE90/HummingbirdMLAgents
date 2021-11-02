@@ -931,6 +931,8 @@ GameObject:
   - component: {fileID: 6552040651734632937}
   - component: {fileID: 972890107187835324}
   - component: {fileID: 6513496262087675668}
+  - component: {fileID: 8495527996008196292}
+  - component: {fileID: 1757072046654387985}
   m_Layer: 0
   m_Name: HummingBird
   m_TagString: Untagged
@@ -986,6 +988,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84bf8cf77348ee4d86df01c251806d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  _isTraining: 0
   _strength: 0
   _horizontalWingControl: 0
   _verticalWingControl: 0
@@ -1001,6 +1008,7 @@ MonoBehaviour:
   _centroidComputer: {fileID: 6552040651734632937}
   _chainController: {fileID: 4724016920016910801}
   _animator: {fileID: 4724016920690599826}
+  _environmentController: {fileID: 0}
 --- !u!114 &6552040651734632937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,6 +1072,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8495527996008196292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570527836564677891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 13
+    NumStackedVectorObservations: 1
+    VectorActionSize: 06000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: HummingBird
+  TeamId: 0
+  m_UseChildSensors: 1
+--- !u!114 &1757072046654387985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570527836564677891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 1
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &5973224772799400940
 GameObject:
   m_ObjectHideFlags: 0
