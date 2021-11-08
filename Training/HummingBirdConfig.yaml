@@ -2,9 +2,9 @@ behaviors:
   HummingBird:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 250
-      buffer_size: 5000
-      learning_rate: 0.00005
+      batch_size: 350
+      buffer_size: 7000
+      learning_rate: 0.000075
       beta: 0.0001
       epsilon: 0.2
       lambd: 0.925
@@ -26,4 +26,16 @@ behaviors:
     max_steps: 100000000
     checkpoint_interval: 1500000
     summary_freq: 40000
-    time_horizon: 500
+    time_horizon: 700
+
+environment_parameters:
+  herd_count:
+    curriculum:
+      - name: Lesson2
+        completion_criteria:
+          measure: reward
+          behavior: HummingBird
+          signal_smoothing: true
+          min_lesson_length: 300
+          threshold: 3.2
+        value: 30

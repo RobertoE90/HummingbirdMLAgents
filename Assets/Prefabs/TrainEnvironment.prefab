@@ -173,10 +173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd50e3dc876fd264c8692445c45ac1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debug: 0
   _environmentSize: {x: 3, y: 5, z: 3}
   _hummingbird: {fileID: 5691881852166277295}
-  _targetPosition: {fileID: 2513836357655353994}
-  _targetPositionRadius: 0.25
+  _targetTransform: {fileID: 2513836357655353994}
+  _targetPositionRadius: 0.2
   _floor: {fileID: 2513836357195702629}
   _boxCollider: {fileID: 2513836358280242043}
   _infoLabel: {fileID: 6704198345649793867}
@@ -365,10 +366,6 @@ PrefabInstance:
     - target: {fileID: 972890107187835324, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
       propertyPath: m_Radius
       value: 0.015
-      objectReference: {fileID: 0}
-    - target: {fileID: 972890107187835324, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 972890107187835324, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
       propertyPath: m_Center.y
@@ -563,16 +560,8 @@ PrefabInstance:
       value: -36.682
       objectReference: {fileID: 0}
     - target: {fileID: 6513496262087675668, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6513496262087675668, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
       propertyPath: m_IsKinematic
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6552040651734632937, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}
-      propertyPath: _debug
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbed1d12d03f8fd489111d0495dd6f0e, type: 3}

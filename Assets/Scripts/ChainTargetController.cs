@@ -10,6 +10,7 @@ public class ChainTargetController : MonoBehaviour
     [Space(10)]
     [SerializeField] private ChainToTarget _chainToTarget;
     [Space(20)]
+    [SerializeField] private Transform _chainPole;
     [SerializeField] private Transform[] _joins;
     private Vector3[] _initPositions;
     private Quaternion[] _initRotations;
@@ -64,6 +65,9 @@ public class ChainTargetController : MonoBehaviour
 
         _lerpedPose = InterpolatePoses();
         TransformChainWithPose(_lerpedPose, out _chainTargetPositions, out _chainTargetRotations);
+
+        _chainPole.localPosition = Vector3.Lerp(new Vector3(0f, 0.6f, 0f), new Vector3(0f, 0.2f, 0.7f), _verticalLerp * 0.5f + 0.5f);
+
         _chainToTarget.FitChainToPositions(_chainTargetPositions);
     }
 

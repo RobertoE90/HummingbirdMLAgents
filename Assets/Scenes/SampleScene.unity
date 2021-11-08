@@ -233,6 +233,11 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
+--- !u!4 &374840729 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2695485346082232276, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+  m_PrefabInstance: {fileID: 2513836356894538074}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &466016961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,7 +247,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -250,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 5.58
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -284,6 +289,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _targetPositionRadius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment (3)
@@ -295,6 +316,14 @@ PrefabInstance:
     - target: {fileID: 4829935755689515624, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_BehaviorName
       value: Hummingbird
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debugText
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: _isTraining
@@ -408,7 +437,7 @@ PrefabInstance:
       objectReference: {fileID: 366756079}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -416,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 5.58
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -450,6 +479,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _targetPositionRadius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment (2)
@@ -463,11 +508,84 @@ PrefabInstance:
       value: Hummingbird
       objectReference: {fileID: 0}
     - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debugText
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: _isTraining
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+--- !u!1 &881793303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 881793306}
+  - component: {fileID: 881793305}
+  - component: {fileID: 881793304}
+  m_Layer: 0
+  m_Name: CameraOnHumming
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &881793304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881793303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0babaaa2bcd5e6c47a7a6d6448cbd16f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 374840729}
+--- !u!95 &881793305
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881793303}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9f65308fe15da64eb07feba1e975f70, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &881793306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881793303}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1233696533}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &947246404
 Material:
   serializedVersion: 6
@@ -630,7 +748,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 30
-  field of view: 60
+  field of view: 20
   orthographic: 0
   orthographic size: 2.75
   m_Depth: -1
@@ -655,13 +773,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 1, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1617417578}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,6 +812,113 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1233696532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233696533}
+  - component: {fileID: 1233696536}
+  - component: {fileID: 1233696534}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1233696533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233696532}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 881793306}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1233696534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233696532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+--- !u!20 &1233696536
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233696532}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.1
+  far clip plane: 30
+  field of view: 60
+  orthographic: 1
+  orthographic size: 0.5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 1
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1001 &1427468109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -703,7 +928,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -711,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 5.58
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -745,6 +970,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _targetPositionRadius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment (1)
@@ -756,6 +997,14 @@ PrefabInstance:
     - target: {fileID: 4829935755689515624, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_BehaviorName
       value: Hummingbird
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debugText
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: _isTraining
@@ -807,7 +1056,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617417576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
@@ -823,7 +1072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -831,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 5.58
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -865,6 +1114,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _targetPositionRadius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment (4)
@@ -876,6 +1141,14 @@ PrefabInstance:
     - target: {fileID: 4829935755689515624, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_BehaviorName
       value: Hummingbird
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debugText
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: _isTraining
@@ -900,7 +1173,7 @@ PrefabInstance:
       objectReference: {fileID: 947246404}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242040, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -942,6 +1215,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _environmentSize.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513836358280242041, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _targetPositionRadius
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2513836358280242042, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: m_Name
       value: TrainEnvironment
@@ -954,9 +1247,29 @@ PrefabInstance:
       propertyPath: m_BehaviorName
       value: Hummingbird
       objectReference: {fileID: 0}
+    - target: {fileID: 5142714011094899092, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debugText
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5691881852166277295, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
       propertyPath: _isTraining
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590016050524028686, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892204685487103665, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
+      propertyPath: _debug
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01a7073426acba14c9c40f71149bf9bb, type: 3}
