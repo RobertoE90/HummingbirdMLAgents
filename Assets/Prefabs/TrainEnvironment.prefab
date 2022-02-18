@@ -174,10 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _debug: 0
-  _environmentSize: {x: 3, y: 5, z: 3}
+  _environmentSize: {x: 0.5, y: 0.5, z: 0.5}
   _hummingbird: {fileID: 5691881852166277295}
   _targetTransform: {fileID: 2513836357655353994}
-  _targetPositionRadius: 0.2
+  _targetPositionRadius: 0.1
   _floor: {fileID: 2513836357195702629}
   _boxCollider: {fileID: 2513836358280242043}
   _infoLabel: {fileID: 6704198345649793867}

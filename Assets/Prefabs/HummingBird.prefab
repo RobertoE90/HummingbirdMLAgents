@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 7506200630992855142}
   - component: {fileID: 7261499313741084527}
   - component: {fileID: 6443715360882937402}
-  - component: {fileID: 340609545064639396}
+  - component: {fileID: 2570979774880361139}
   m_Layer: 0
   m_Name: RootJoin
   m_TagString: Untagged
@@ -322,7 +322,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.0175
   m_Center: {x: 0, y: -0.009, z: 0.005}
---- !u!54 &340609545064639396
+--- !u!54 &2570979774880361139
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,10 +331,10 @@ Rigidbody:
   m_GameObject: {fileID: 2264328046136866601}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_Drag: 10
+  m_AngularDrag: 5
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -979,7 +979,6 @@ GameObject:
   - component: {fileID: 3283199883459240130}
   - component: {fileID: 1732357025572714204}
   - component: {fileID: 6552040651734632937}
-  - component: {fileID: 6513496262087675668}
   - component: {fileID: 8495527996008196292}
   - component: {fileID: 1757072046654387985}
   m_Layer: 0
@@ -1068,6 +1067,8 @@ MonoBehaviour:
   _animator: {fileID: 4724016920690599826}
   _headNeckController: {fileID: 1732357025572714204}
   _environmentController: {fileID: 0}
+  _goToTargetBrain: {fileID: 5022602860645237092, guid: d899e0d84452f2a4787af6f2365ca1b7, type: 3}
+  _hoverBrain: {fileID: 5022602860645237092, guid: dd10196d564340244ab20810164bb8ef, type: 3}
 --- !u!114 &1732357025572714204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,8 +1087,7 @@ MonoBehaviour:
   _constrainHeadPosition: 0
   _headLockCenter: {x: 0, y: -0.0075, z: -0.02}
   _headLockRadius: {x: 0.015, y: 0.015, z: 0.0075}
-  _horizontalMaxApertureAngle: 70
-  _verticalMaxApertureAngle: 10
+  _horizontalMaxApertureAngle: 75
   _root: {fileID: 7506200630992855142}
   _neck: {fileID: 2391627671057782911}
   _head: {fileID: 3082169886978474621}
@@ -1125,22 +1125,6 @@ MonoBehaviour:
   - {fileID: 7319580956061856448}
   - {fileID: 1775968344495450101}
   _debug: 0
---- !u!54 &6513496262087675668
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5570527836564677891}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 5
-  m_AngularDrag: 5
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &8495527996008196292
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,6 @@ public class HeadNeckController : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private float _horizontalMaxApertureAngle;
-    [SerializeField] private float _verticalMaxApertureAngle;
 
     [Header("References")]
     [SerializeField] private Transform _root;
@@ -59,10 +58,13 @@ public class HeadNeckController : MonoBehaviour
     /// <param name="constrainHeadFloatValue"> if is greater than 0 the head position will be constrained </param>
     public void SetTargetHeadPoseParams(float horizontalControl, float verticalControl, float constrainHeadFloatValue, bool forceApply = false)
     {
-        if (Time.time >= _nextHeadMoveAvailableTime || forceApply)
+        var angleBetweenCalls = Vector2.Angle(new Vector2(horizontalControl, verticalControl), new Vector2(_currentHorizontalControl, _currentVerticalControl));
+
+        if ((constrainHeadFloatValue > 0f && Time.time >= _nextHeadMoveAvailableTime && angleBetweenCalls > 30f) || forceApply)
         //if (constrainHeadFloatValue > 0f || forceApply)
         {
-            _nextHeadMoveAvailableTime += UnityEngine.Random.Range(0.5f, 4.5f);
+            //_nextHeadMoveAvailableTime += UnityEngine.Random.Range(0.5f, 2.5f);
+            _nextHeadMoveAvailableTime += 0.15f;
 
             _horizontalControl = horizontalControl;
             _verticalControl = verticalControl;
@@ -126,19 +128,17 @@ public class HeadNeckController : MonoBehaviour
 
     private Quaternion ConstrainHeadRotation()
     {
-        var toTargetRotation = Quaternion.LookRotation(_targetHeadPose.LookAtPosition - _head.position, (Vector3.Dot(_root.up, Vector3.up) > 0f) ? Vector3.up : Vector3.down);
+        //var toTargetRotation = Quaternion.LookRotation(_targetHeadPose.LookAtPosition - _head.position, (Vector3.Dot(_root.up, Vector3.up) > 0f) ? Vector3.up : Vector3.down);
+        var toTargetRotation = Quaternion.LookRotation(_targetHeadPose.LookAtPosition - _head.position,  Vector3.up);
 
         var transformMatrix = Matrix4x4.TRS(Vector3.zero, _neckInitialRotation * _neck.parent.rotation, Vector3.one);
         var headCandidateForwardLocal = transformMatrix.inverse.MultiplyPoint3x4(toTargetRotation * Vector3.forward * -1);
-        var headUpLocal = transformMatrix.inverse.MultiplyPoint3x4(toTargetRotation * Vector3.up);
-
         headCandidateForwardLocal = ClampVector(headCandidateForwardLocal, _horizontalMaxApertureAngle);
 
-        var rotateUpMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(90, 0, 0), Vector3.one);
-        var upRotated = rotateUpMatrix.MultiplyPoint3x4(headUpLocal);
-        upRotated = ClampVector(upRotated, _verticalMaxApertureAngle);
-        headUpLocal = rotateUpMatrix.inverse.MultiplyPoint3x4(upRotated);
-        
+        var globalUpBodyVector = new Vector3(0, _root.up.y, 0) * 10;
+        if (_root.up.y == 0)
+            globalUpBodyVector.y = 10;
+
         //magnitude of dir needs to be 1
         Vector3 ClampVector(Vector3 dir, float maxAngle)
         {
@@ -161,7 +161,7 @@ public class HeadNeckController : MonoBehaviour
 
         return Quaternion.LookRotation(
             transformMatrix.MultiplyPoint3x4(headCandidateForwardLocal), 
-            transformMatrix.MultiplyPoint3x4(headUpLocal));
+            globalUpBodyVector);
     }
 
     private void OnDrawGizmos()
